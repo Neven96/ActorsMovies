@@ -1,20 +1,23 @@
 from collections import defaultdict
 
 def buildgraph(lines):
-    V = set()
-    E = defaultdict(set)
-    w = dict()
+    vertices = set()
+    edges = defaultdict(set)
+    movie_weights = {}
 
     for line in lines:
         v, u, weight = line[0:3]
 
-        V.add(v)
-        V.add(u)
+        # Add vertices
+        vertices.add(v)
+        vertices.add(u)
 
-        E[v].add(u)
-        E[u].add(v)
+        # Add edges
+        edges[v].add(u)
+        edges[u].add(v)
 
-        w[(v, u)] = float(weight)
-        w[(u, v)] = float(weight)
+        weigth_float = float(weight)
+        movie_weights[(v, u)] = weigth_float
+        movie_weights[(u, v)] = weigth_float
 
-    return V, E, w
+    return vertices, edges, movie_weights
