@@ -6,18 +6,18 @@ def buildgraph(lines):
     movie_weights = {}
 
     for line in lines:
-        v, u, weight = line[0:3]
+        actor1, actor2, weight = line[0:3]
 
         # Add vertices
-        vertices.add(v)
-        vertices.add(u)
+        vertices.add(actor1)
+        vertices.add(actor2)
 
         # Add edges
-        edges[v].add(u)
-        edges[u].add(v)
+        edges[actor1].add(actor2)
+        edges[actor2].add(actor1)
 
         weigth_float = float(weight)
-        movie_weights[(v, u)] = weigth_float
-        movie_weights[(u, v)] = weigth_float
+        movie_weights[(actor1, actor2)] = weigth_float
+        movie_weights[(actor2, actor1)] = weigth_float
 
     return vertices, edges, movie_weights

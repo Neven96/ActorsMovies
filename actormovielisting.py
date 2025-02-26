@@ -1,7 +1,12 @@
 from itertools import combinations
-import time
 
 def movie_magic(actors, movies):
+    '''
+    Connects the actors and movies together, and creates a list of shared movies for every actor
+
+    Parameters
+    -----------
+    '''
     shared_movies = []
     actor_names = {}
     movie_titles = {}

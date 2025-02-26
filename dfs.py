@@ -1,19 +1,19 @@
-def dfs(G, s):
+def dfs(graph, s):
     '''
     Depth-first search
     '''
-    _, E, _ = G
+    _, edges, _ = graph
     visited = set()
     stack = [s]
     result = []
 
     while stack:
-        v = stack.pop()
-        if v in visited:
+        actor_id = stack.pop()
+        if actor_id in visited:
             continue
-        result.append(v)
-        visited.add(v)
-        for u in E[v]:
+        result.append(actor_id)
+        visited.add(actor_id)
+        for u in edges[actor_id]:
             stack.append(u)
 
     return result

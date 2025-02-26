@@ -3,101 +3,80 @@ from readmovies import read_movies
 from actormovielisting import movie_magic
 from costarsearch import co_star_search
 from buildgraph import buildgraph
-from findshortestpath import find_shortest_path
-from findshortestpathweighted import find_shortest_path_weighted
+from findpath import find_shortest_path
+from findpathweighted import find_shortest_path_weighted
 from connectionsizes import connection_sizes
-
-import time
+from timekeeper import timekeeper
 
 def main():
+    #
+    # For testing, or if you want to only see certain things
+    #
+    shortest_path = True
+    weighted_path = True
+    depth_search = True
+
     # Reading the files of actors and movies
     actors = read_actors()
     movies = read_movies()
 
-    start_time = time.perf_counter_ns()
-
+    # Processing the input from the files properly into mangable lists and dicts
     print('Creating the lists')
-    shared_movies, actor_names, movie_titles = movie_magic(actors, movies)
-
-    time_used = time.perf_counter_ns() - start_time
-    print('Full lists: ', time_used)
-
-    start_time = time.perf_counter_ns()
-
-    # Builds the graph
-    print('\nBuilding the graph:')
-    graph = buildgraph(shared_movies)
-
-    time_used = time.perf_counter_ns() - start_time
-    print('Graph time: ', time_used)
-
-    shortest_path = False
-    weighted_path = True
-    depth_search = False
-
-    # The ids of the actors to check path
-    actor_from = 'nm0942926'
-    actor_to = 'nm7153679'
-
-    start_time = time.perf_counter_ns()
-
-    print('\nAdding the shared actors together:')
-    if shortest_path or weighted_path:
-        actor_names = co_star_search(shared_movies, actor_names)
-
-    time_used = time.perf_counter_ns() - start_time
-    print('Co-star time: ', time_used)
+    shared_movies, actor_names, movie_titles = timekeeper('Full lists', lambda: movie_magic(actors, movies))
 
     # The ids of the actors to check path
     # Most famous actors should be usable,
     # but newer or smaller actors might not be
-    actor_from = 'nm0942926'
-    actor_to = 'nm7153679'
+    actor_from = ''
+    actor_to = ''
 
     print('\nActors chosen:')
     try:
-        print(f'From: {actor_names[actor_from]['name']}')
-        print(f'To: {actor_names[actor_to]['name']}')
+        actor_from = input('Choose starting actor(format is nm#######, 7 digits): ')
+        actor_names[actor_from]['name']
     except KeyError:
-        print('Actor id not in file')
-        exit(1)
-    
-    start_time = time.perf_counter_ns()
+        print('Actor id not in file, using fallback')
+        actor_from = 'nm0942926'
+        # Backup actors were chosen on random
+        # I can certainly not remember why...
+
+    try:
+        actor_to = input('Choose ending actor(format is nm#######, 7 digits): ')
+        actor_names[actor_to]['name']
+    except KeyError:
+        print('Actor id not in file, using fallback')
+        actor_to = 'nm7153679'
+
+    print(f'From: {actor_names[actor_from]['name']}')
+    print(f'To: {actor_names[actor_to]['name']}')
+
+    # Builds the graph
+    # Slow function, about 7-8 seconds
+    print('\nBuilding the graph:')
+    graph = timekeeper('Graph time', lambda: buildgraph(shared_movies))
+
+    print('\nAdding the shared actors together:')
+    if shortest_path or weighted_path:
+        actor_names = timekeeper('Co-star time', lambda: co_star_search(shared_movies, actor_names))
 
     # Shortest path between actors, unweighted
     print('\nShortest path between actors:')
     if shortest_path:
-       find_shortest_path(graph, actor_names, movie_titles, actor_from, actor_to)
+        timekeeper('Shortest path', lambda: find_shortest_path(graph, actor_names, movie_titles, actor_from, actor_to))
     else:
         print('Set "shortest_path" to True to get the print')
-
-    time_used = time.perf_counter_ns() - start_time
-    print('Shortest path: ', time_used)
-
-    start_time = time.perf_counter_ns()
 
     # Shortest path between actors, weighed by movie score
     print('\nShortest path between actors, but weighted on movie score:')
     if weighted_path:
-        find_shortest_path_weighted(shared_movies, actor_names, movie_titles, actor_from, actor_to)
+        timekeeper('Weighted path', lambda: find_shortest_path_weighted(shared_movies, actor_names, movie_titles, actor_from, actor_to))
     else:
         print('Set "weighted_path" to True to get the print')
-
-    time_used = time.perf_counter_ns() - start_time
-    print('Weighted path: ', time_used)
-
-    start_time = time.perf_counter_ns()
 
     # Oppgave 4
     print('\nDepth first search for finding the sizes of the connections:')
     if depth_search:
-        connection_sizes(graph, actor_names)
-
-    time_used = time.perf_counter_ns() - start_time
-    print('Depth-first search: ', time_used)
+        timekeeper('Depth-first search', lambda: connection_sizes(graph, actor_names))
 
 if __name__ == '__main__':
-    full_progam_time = time.perf_counter_ns()
-    main()
-    full_time_used = time.perf_counter_ns() - full_progam_time
-    print('Full program time: ', full_time_used)
+    timekeeper('Full program time', lambda: main())
