@@ -1,6 +1,5 @@
 from buildgraph import buildgraph
 from shortestpath import shortest_path_from
-import time
 
 def find_shortest_path_weighted(shared_movies, actor_names, movie_titles, actor_from, actor_to):
     # Changes the weight of all movies, so that the best movies have lowest weight

@@ -6,6 +6,19 @@ def movie_magic(actors, movies):
 
     Parameters
     -----------
+    actors : list
+        A list of lists containing each actors id, name and movies they have been in
+    movies : list
+        A list of lists containing each movies id, title and rating
+
+    Returns
+    -----------
+    shared_movies : list
+        A list of list with pairs of actors, the movie they both starred in and the movies rating
+    actor_names : dict
+        A dictionary containing an actors name and each co-star they have had
+    movie_titles : dict
+        A dictionary containing a movies title, rating and all actors in the movie
     '''
     shared_movies = []
     actor_names = {}

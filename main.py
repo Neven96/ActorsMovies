@@ -5,7 +5,7 @@ from costarsearch import co_star_search
 from buildgraph import buildgraph
 from findpath import find_shortest_path
 from findpathweighted import find_shortest_path_weighted
-from connectionsizes import connection_sizes
+from componentsizes import component_sizes
 from timekeeper import timekeeper
 
 def main():
@@ -73,10 +73,10 @@ def main():
     else:
         print('Set "weighted_path" to True to get the print')
 
-    # Oppgave 4
+    # Setting up connec
     print('\nDepth first search for finding the sizes of the connections:')
     if depth_search:
-        timekeeper('Depth-first search', lambda: connection_sizes(graph, actor_names))
+        timekeeper('Depth-first search', lambda: component_sizes(graph, actor_names))
 
 if __name__ == '__main__':
     timekeeper('Full program time', lambda: main())

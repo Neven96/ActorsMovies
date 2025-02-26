@@ -1,6 +1,6 @@
 from dfs import dfs
 
-def connection_sizes(graph, actor_names):
+def component_sizes(graph, actor_names):
     new_actor_names_dict = actor_names
     connections = {}
 
