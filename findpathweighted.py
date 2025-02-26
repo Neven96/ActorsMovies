@@ -35,7 +35,7 @@ def find_shortest_path_weighted(shared_movies, actor_names, movie_titles, actor_
             shared_movie_ids = [co_star[1] for co_star in actor_names[current_actor]['co_stars'] if co_star[0] == next_actor]
 
         best_movie = ''
-        best_rating = 1.0
+        best_rating = 0.0
 
         for movie_id in shared_movie_ids:
             movie_rating = float(movie_titles[movie_id]['rating'])
@@ -52,6 +52,7 @@ def find_shortest_path_weighted(shared_movies, actor_names, movie_titles, actor_
         actor_id, movie_id = actor_movie
         movie_title = movie_titles[movie_id]['title']
         movie_rating = movie_titles[movie_id]['rating']
-        print(f'===[{movie_title} ({movie_rating})] ===> {actor_names[actor_id]['name']}')
+        actor_name = actor_names[actor_id]['name']
+        print(f'===[{movie_title} ({movie_rating})] ===> {actor_name}')
 
     print(f'Total weight: {costs[actor_to]}, the lower the better')

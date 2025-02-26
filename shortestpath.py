@@ -20,7 +20,7 @@ def shortest_path_from(graph, actor_id):
     distances : defaultdict
         The score of each movie that connects the actors
     '''
-    vertices, edges, weights = graph
+    _, edges, weights = graph
     queue = [(0, actor_id)]
     distances = defaultdict(lambda: float('inf'))
     parents = {actor_id: None}
