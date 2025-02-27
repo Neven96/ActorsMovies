@@ -15,11 +15,15 @@ def movie_magic(actors, movies):
     -----------
     shared_movies : list
         A list of list with pairs of actors, the movie they both starred in and the movies rating
+        Example: [actor1_id, actor2_id, movie_rating, movie_id]
     actor_names : dict
         A dictionary containing an actors name and each co-star they have had
+        Example: {"actor_id": {"name": actor_name, "co_stars": [co-stars]}}
     movie_titles : dict
         A dictionary containing a movies title, rating and all actors in the movie
+        Example: {"movie_id": {"title": movie_title, "rating": 0-10, "actors": [actors]}}
     '''
+
     shared_movies = []
     actor_names = {}
     movie_titles = {}
@@ -38,7 +42,6 @@ def movie_magic(actors, movies):
             if actor[i] in movie_titles:
                 movie_titles[actor[i]]['actors'].append(actor[0])
 
-    # Really slow, about 2-3 seconds
     # Creates the shared movie list with all actors who shared a movie and the movie they worked on
     for movie_id, movie_data in movie_titles.items():
         actors_list = movie_data['actors']

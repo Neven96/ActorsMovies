@@ -9,12 +9,17 @@ from componentsizes import component_sizes
 from timekeeper import timekeeper
 
 def main():
+    '''
+    Runs the file, takes in own chosen actors as input
+    Can choose to only run parts of the file if needed to test certain things
+    '''
+
     #
     # For testing, or if you want to only see certain things
     #
     shortest_path = True
-    weighted_path = False
-    depth_search = False
+    weighted_path = True
+    depth_search = True
 
     # Reading the files of actors and movies
     actors = read_actors()
@@ -31,6 +36,7 @@ def main():
     actor_to = ''
 
     print('\nActors chosen:')
+    # Checks if the input is correct and in the database, else goes for backup actors
     try:
         actor_from = input('Choose starting actor(format is nm#######, 7 digits): ')
         actor_names[actor_from]['name']
@@ -38,8 +44,6 @@ def main():
         print('Actor id not in file, using fallback')
         actor_from = 'nm7153679'
         # Backup actors were chosen on random
-        # I can certainly not remember why...
-
     try:
         actor_to = input('Choose ending actor(format is nm#######, 7 digits): ')
         actor_names[actor_to]['name']
