@@ -2,9 +2,27 @@ from buildgraph import buildgraph
 from shortestpath import shortest_path_from
 
 def find_shortest_path_weighted(shared_movies, actor_names, movie_titles, actor_from, actor_to):
+    '''
+    Finds the shortest path between two actors based on co-stars, weighted for the best movie
+
+    Parameters
+    -----------
+    shared_movies : list
+        The list containing lists with actor pairs and their shared movie
+    actor_names : dict
+        The dictionary containing actor_ids as keys and names and co-stars as values
+    movie_titles : dict
+        The dictionary containing movie_ids as keys and title, rating and actors as values
+    actor_from : str
+        The string with the starting actor
+    actor_to : str
+        The string with the actor to path to
+    '''
+
     # Changes the weight of all movies, so that the best movies have lowest weight
     weighted_shared_movies = [[item[0], item[1], str(10.0-float(item[2])), item[3]] for item in shared_movies]
 
+    # Creates a new graph using the new weights
     new_graph = buildgraph(weighted_shared_movies)
     path, costs = shortest_path_from(new_graph, actor_from)
 

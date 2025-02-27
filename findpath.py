@@ -2,15 +2,23 @@ from shortestpath import shortest_path_from
 
 def find_shortest_path(graph, actor_names, movie_titles, actor_from, actor_to):
     '''
-    
+    Finds the shortest path between two actors based on co-stars, 
+    kind of weighted after the worst movie
 
     Parameters
     -----------
-    
-
-    Returns
-    -----------
+    graph : tuple
+        The output from the buildgraph() function, with vertices, edges and weights
+    actor_names : dict
+        The dictionary containing actor_ids as keys and names and co-stars as values
+    movie_titles : dict
+        The dictionary containing movie_ids as keys and title, rating and actors as values
+    actor_from : str
+        The string with the starting actor
+    actor_to : str
+        The string with the actor to path to
     '''
+
     # Uses the shortest path from algorithm to find the shortest path to all actors
     path, costs = shortest_path_from(graph, actor_from)
 
