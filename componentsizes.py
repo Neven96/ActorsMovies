@@ -1,34 +1,33 @@
 from dfs import dfs
+from collections import Counter
 
 def component_sizes(graph, actor_names):
-    new_actor_names_dict = actor_names
-    connections = {}
+    '''
+    Finds the sizes of all the parts of the graph and counts them
 
-    # Use the depth first search to get the length of a component, then adds the times it received that length to a dict
-    while len(new_actor_names_dict) > 0:
-        conCom = dfs(graph, list(new_actor_names_dict.keys())[0])
-        if str(len(conCom)) in connections:
-            connections[str(len(conCom))] = connections[str(len(conCom))]+1
-        else:
-            connections[str(len(conCom))] = 1
+    Parameters
+    -----------
+    graph : tuple
+        The output from the buildgraph() function, with vertices, edges and weights
+    actor_names : dict
+        A dictionary with actor_ids as keys and names and co-stars as values
+    '''
 
-        for con in conCom:
-            new_actor_names_dict.pop(con)
+    remaining_actors = set(actor_names.keys())
+    component_counts = Counter()
 
-    # To sort the numbers I have to convert to int, but the dict I use takes str as keys, so I have to convert them back
-    # It's way to late to figure out a better way for this, but the length of these are so small it doesn't really matter for big O
-    connections_keys = list(connections.keys())
-    connections_keys = [int(i) for i in connections_keys]
-    connections_keys.sort()
-    connections_keys = [str(i) for i in connections_keys]
+    # Using depth-first search to get the length of a component, 
+    # then adds it to the count
+    while remaining_actors:
+        start_actor = next(iter(remaining_actors))
 
-    new_connections = []
-    for key in connections_keys:
-        new_connections.append([key, connections[key]])
+        connected_actors = dfs(graph, start_actor)
+        component_size = len(connected_actors)
 
-    for connection in reversed(new_connections):
-        print(
-            f'There are {str(connection[1])} components of size {str(connection[0])}')
+        component_counts[component_size] += 1
 
-    # print('Unique connected components: ', conCom)
-    # Since my program won't take the 1 length ones into the shared_movies dict, I know excatly how long it is
+        remaining_actors -= connected_actors
+
+    for size in sorted(component_counts.keys(), reverse=True):
+        count = component_counts[size]
+        print(f'There are {count} components of size {size}')

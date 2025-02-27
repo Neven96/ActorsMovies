@@ -23,6 +23,16 @@ def timekeeper(out_print, function):
     output = function()
 
     time_used = time.perf_counter_ns() - start_time
-    print(f'{out_print}: {time_used} ns')
+
+    time_symbol = 'ns'
+
+    if time_used > 1000000000:
+        time_used = time_used/1000000000.0
+        time_symbol = 's'
+    elif time_used > 1000000:
+        time_used = time_used/1000000.0
+        time_symbol = 'ms'
+
+    print(f'{out_print} time: {time_used:.4f} {time_symbol}')
 
     return output

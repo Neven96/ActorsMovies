@@ -55,4 +55,4 @@ def find_shortest_path_weighted(shared_movies, actor_names, movie_titles, actor_
         actor_name = actor_names[actor_id]['name']
         print(f'===[{movie_title} ({movie_rating})] ===> {actor_name}')
 
-    print(f'Total weight: {costs[actor_to]}, the lower the better')
+    print(f'Total weight: {round(costs[actor_to], 1)}, the lower the better')

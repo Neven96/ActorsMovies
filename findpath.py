@@ -1,8 +1,18 @@
 from shortestpath import shortest_path_from
 
 def find_shortest_path(graph, actor_names, movie_titles, actor_from, actor_to):
+    '''
+    
+
+    Parameters
+    -----------
+    
+
+    Returns
+    -----------
+    '''
     # Uses the shortest path from algorithm to find the shortest path to all actors
-    path, _ = shortest_path_from(graph, actor_from)
+    path, costs = shortest_path_from(graph, actor_from)
 
     full_path = []
     current = actor_to
@@ -38,5 +48,6 @@ def find_shortest_path(graph, actor_names, movie_titles, actor_from, actor_to):
         movie_title = movie_titles[movie_id]['title']
         movie_rating = movie_titles[movie_id]['rating']
         actor_name = actor_names[actor_id]['name']
-        print(
-            f'===[{movie_title} ({movie_rating})] ===> {actor_name}')
+        print(f'===[{movie_title} ({movie_rating})] ===> {actor_name}')
+        
+    print(f'Total weight: {round(costs[actor_to], 1)}, the lower the better')

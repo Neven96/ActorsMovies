@@ -13,8 +13,8 @@ def main():
     # For testing, or if you want to only see certain things
     #
     shortest_path = True
-    weighted_path = True
-    depth_search = True
+    weighted_path = False
+    depth_search = False
 
     # Reading the files of actors and movies
     actors = read_actors()
@@ -36,7 +36,7 @@ def main():
         actor_names[actor_from]['name']
     except KeyError:
         print('Actor id not in file, using fallback')
-        actor_from = 'nm0942926'
+        actor_from = 'nm7153679'
         # Backup actors were chosen on random
         # I can certainly not remember why...
 
@@ -45,7 +45,7 @@ def main():
         actor_names[actor_to]['name']
     except KeyError:
         print('Actor id not in file, using fallback')
-        actor_to = 'nm7153679'
+        actor_to = 'nm0942926'
 
     print(f'From: {actor_names[actor_from]['name']}')
     print(f'To: {actor_names[actor_to]['name']}')
@@ -53,11 +53,11 @@ def main():
     # Builds the graph
     # Slow function, about 7-8 seconds
     print('\nBuilding the graph:')
-    graph = timekeeper('Graph time', lambda: buildgraph(shared_movies))
+    graph = timekeeper('Graph', lambda: buildgraph(shared_movies))
 
     print('\nAdding the shared actors together:')
     if shortest_path or weighted_path:
-        actor_names = timekeeper('Co-star time', lambda: co_star_search(shared_movies, actor_names))
+        actor_names = timekeeper('Co-star', lambda: co_star_search(shared_movies, actor_names))
 
     # Shortest path between actors, unweighted
     print('\nShortest path between actors:')
@@ -79,4 +79,4 @@ def main():
         timekeeper('Depth-first search', lambda: component_sizes(graph, actor_names))
 
 if __name__ == '__main__':
-    timekeeper('Full program time', lambda: main())
+    timekeeper('Full program', lambda: main())
