@@ -19,6 +19,7 @@ def buildgraph(lines):
         A dictionary with the actors as tuple pairs of keys and the rating of the movie as values
         Used for setting up the distance between actors
     '''
+    
     vertices = set()
     edges = defaultdict(set)
     movie_weights = {}

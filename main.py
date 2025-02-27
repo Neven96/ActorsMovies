@@ -78,7 +78,7 @@ def main():
         print('Set "weighted_path" to True to get the print')
 
     # Setting up connec
-    print('\nDepth first search for finding the sizes of the connections:')
+    print('\nDepth first search for finding the sizes of the components:')
     if depth_search:
         timekeeper('Depth-first search', lambda: component_sizes(graph, actor_names))
 

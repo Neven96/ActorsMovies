@@ -16,8 +16,7 @@ def component_sizes(graph, actor_names):
     remaining_actors = set(actor_names.keys())
     component_counts = Counter()
 
-    # Using depth-first search to get the length of a component, 
-    # then adds it to the count
+    # Using depth-first search to get the length of a component, then adds it to the count
     while remaining_actors:
         start_actor = next(iter(remaining_actors))
 

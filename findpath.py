@@ -32,6 +32,7 @@ def find_shortest_path(graph, actor_names, movie_titles, actor_from, actor_to):
         current = path[current]
     full_path.append(actor_from)
     # Reverses the actors so that we go from actor_from to actor_to
+    # It was somehow easier to get this to work than other way
     full_path.reverse()
 
     for i in range(len(full_path) - 1):

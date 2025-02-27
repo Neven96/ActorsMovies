@@ -36,8 +36,10 @@ def find_shortest_path_weighted(shared_movies, actor_names, movie_titles, actor_
         current = path[current]
     full_path.append(actor_from)
     # Reverses the actors so that we go from actor_from to actor_to
+    # It was somehow easier to get this to work than other way
     full_path.reverse()
 
+    # Creating a dict for faster handling of each pair
     co_star_dict = {}
     for actor_id in full_path[:-1]:
         co_star_dict[actor_id] = {co_star[0]: co_star[1] for co_star in actor_names[actor_id]['co_stars']}
@@ -52,6 +54,7 @@ def find_shortest_path_weighted(shared_movies, actor_names, movie_titles, actor_
         else:
             shared_movie_ids = [co_star[1] for co_star in actor_names[current_actor]['co_stars'] if co_star[0] == next_actor]
 
+        # Finds the best movie based on its rating
         best_movie = ''
         best_rating = 0.0
 
