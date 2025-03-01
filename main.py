@@ -1,5 +1,4 @@
-from readactors import read_actors
-from readmovies import read_movies
+from readfile import read_file
 from actormovielisting import movie_magic
 from costarsearch import co_star_search
 from buildgraph import buildgraph
@@ -22,8 +21,8 @@ def main():
     depth_search = True
 
     # Reading the files of actors and movies
-    actors = read_actors()
-    movies = read_movies()
+    actors = read_file('actors.tsv')
+    movies = read_file('movies.tsv')
 
     # Processing the input from the files properly into mangable lists and dicts
     print('Creating the lists')
