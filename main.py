@@ -34,33 +34,34 @@ def main():
     actor_from = ''
     actor_to = ''
 
-    print('\nActors chosen:')
-    # Checks if the input is correct and in the database, else goes for backup actors
-    try:
-        actor_from = input('Choose starting actor(format is nm#######, 7 digits): ')
-        actor_names[actor_from]['name']
-    except KeyError:
-        print('Actor id not in file, using fallback')
-        actor_from = 'nm7153679'
-        # Backup actors were chosen on random
-    try:
-        actor_to = input('Choose ending actor(format is nm#######, 7 digits): ')
-        actor_names[actor_to]['name']
-    except KeyError:
-        print('Actor id not in file, using fallback')
-        actor_to = 'nm0942926'
+    if shortest_path or weighted_path:
+        print('\nActors chosen:')
+        # Checks if the input is correct and in the database, else goes for backup actors
+        try:
+            actor_from = input(
+                'Choose starting actor(format is nm#######, 7 digits): ')
+            actor_names[actor_from]['name']
+        except KeyError:
+            print('Actor id not in file, using fallback')
+            actor_from = 'nm7153679'
+            # Backup actors were chosen on random
+        try:
+            actor_to = input(
+                'Choose ending actor(format is nm#######, 7 digits): ')
+            actor_names[actor_to]['name']
+        except KeyError:
+            print('Actor id not in file, using fallback')
+            actor_to = 'nm0942926'
 
-    print(f'From: {actor_names[actor_from]['name']}')
-    print(f'To: {actor_names[actor_to]['name']}')
+        print(f'From: {actor_names[actor_from]['name']}')
+        print(f'To: {actor_names[actor_to]['name']}')
+
+        print('\nAdding the shared actors together:')
+        actor_names = timekeeper('Co-star', lambda: co_star_search(shared_movies, actor_names))
 
     # Builds the graph
-    # Slow function, about 7-8 seconds
     print('\nBuilding the graph:')
     graph = timekeeper('Graph', lambda: buildgraph(shared_movies))
-
-    print('\nAdding the shared actors together:')
-    if shortest_path or weighted_path:
-        actor_names = timekeeper('Co-star', lambda: co_star_search(shared_movies, actor_names))
 
     # Shortest path between actors, unweighted
     print('\nShortest path between actors:')
@@ -76,7 +77,7 @@ def main():
     else:
         print('Set "weighted_path" to True to get the print')
 
-    # Setting up connec
+    # Setting up connected actors/components list
     print('\nDepth first search for finding the sizes of the components:')
     if depth_search:
         timekeeper('Depth-first search', lambda: component_sizes(graph, actor_names))
